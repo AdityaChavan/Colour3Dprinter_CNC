@@ -14,21 +14,29 @@ using namespace std;
 int steps1=0;
 int steps2=0;
 int steps3=0;
+int steps4=0;
 
-int stp1_1a=30;
-int stp1_1b=60;
-int stp1_2a=31;
-int stp1_2b=50;
+int stp1_1a=47;
+int stp1_1b=46;
+int stp1_2a=27;
+int stp1_2b=65;
 
 int stp2_1a=66;
-int stp2_1b=67;
-int stp2_2a=69;
-int stp2_2b=68;
+int stp2_1b=69;
+int stp2_2a=45;
+int stp2_2b=23;
 
-int stp3_1a=45;
-int stp3_1b=44;
-int stp3_2a=23;
+int stp3_1a=67;
+int stp3_1b=68;
+int stp3_2a=44;
 int stp3_2b=26;
+
+int stp4_1a=47;
+int stp4_1b=46;
+int stp4_2a=27;
+int stp4_2b=65;
+
+
 
 FILE *export_file = NULL;  
 FILE *IO_direction = NULL;
@@ -160,7 +168,7 @@ else if(direction[1]==0)
 	steps1=stp;
 		
 }
-usleep(10);
+//usleep(10);
 }
 /*YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY*/
 void incsteppery()
@@ -242,7 +250,7 @@ else if(direction[2]==0)
 	
 	steps2=stp;
 	}
-usleep(10);
+//usleep(10);
 }
 /*ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ*/
 void incstepperz()
@@ -253,7 +261,7 @@ a=stp3_1a;
 b=stp3_1b;
 c=stp3_2a;
 d=stp3_2b;
-
+ 
 stp=steps3;
 
 
@@ -327,7 +335,92 @@ if(stp==0)
 	steps3=stp;
 		
 }
-usleep(10);
+//usleep(10);
+}
+/*EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE1111111111111111111111111111111111111111*/
+void incsteppere()
+{
+int a , b , c , d , stp;
+//printf("Direction_4==%d\t%d\n",direction[4],steps4);
+a=stp4_1a;
+b=stp4_1b;
+c=stp4_2a;
+d=stp4_2b;
+
+stp=steps4;
+
+
+if(direction[4]==1)
+{	if(stp==0)
+	{
+	pinwrite(a,1);
+	pinwrite(b,0);
+	pinwrite(c,1);
+	pinwrite(d,0);
+	stp=1;
+			}
+	else if(stp==1)
+	{pinwrite(a,0);
+	pinwrite(b,1);
+	pinwrite(c,1);
+	pinwrite(d,0);
+	stp=2;
+	}
+	else if( stp==2)
+	{pinwrite(a,0);
+	pinwrite(b,1);
+	pinwrite(c,0);
+	pinwrite(d,1);
+	stp=3;
+	}
+	else if(stp==3)
+	{pinwrite(a,1);
+	pinwrite(b,0);
+	pinwrite(c,0);
+	pinwrite(d,1);
+	stp=0;
+	}
+	
+//	printf("\t\t\t\t\t\t\tstep3=%d\n",steps3);
+	
+	steps4=stp;
+	}
+else if(direction[4]==0)	
+{
+if(stp==0)
+	{
+	pinwrite(a,1);
+	pinwrite(b,0);
+	pinwrite(c,1);
+	pinwrite(d,0);
+	stp=3;
+			}
+	else if(stp==1)
+	{pinwrite(a,0);
+	pinwrite(b,1);
+	pinwrite(c,1);
+	pinwrite(d,0);
+	stp=0;
+	}
+	else if( stp==2)
+	{pinwrite(a,0);
+	pinwrite(b,1);
+	pinwrite(c,0);
+	pinwrite(d,1);
+	stp=1;
+	}
+	else if(stp==3)
+	{pinwrite(a,1);
+	pinwrite(b,0);
+	pinwrite(c,0);
+	pinwrite(d,1);
+	stp=2;
+	}
+	//printf("\t\t\t\t\t\t\tstep4=%d\n",steps4);
+	steps4=stp;
+		
+}
+//usleep(10);
 }
 
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
@@ -355,9 +448,16 @@ if(dist!=0)
 {
 int stps;
 float t;
-
+if(num!=4)
+{
 float rstps=(dist*25)-0.5;
 stps=ceil(rstps);
+}
+else 
+{
+float rstps=(dist/0.22)-0.5;
+stps=ceil(rstps);
+}
 int t1;
 if(stps!=0)
 {
@@ -379,6 +479,7 @@ for( int i=0;i<stps;i++)
 if(num==1)	{incstepperx();}
 else if(num==2)	{incsteppery();}
 else if(num==3)	{incstepperz();}
+else if(num==4) {incsteppere();}
 
 usleep(t1);
 
@@ -408,6 +509,11 @@ pinwrite(stp3_1b,0);
 pinwrite(stp3_2a,0);
 pinwrite(stp3_2b,0);
 
+pinwrite(stp4_1a,0);
+pinwrite(stp4_1b,0);
+pinwrite(stp4_2a,0);
+pinwrite(stp4_2b,0);
+
 }
 
 void movex( float f)
@@ -424,8 +530,14 @@ stepper(2,f,ttime);
 
 }
 
+void movee(float e)
+{
 
-void multithread(float dist1, float dist2,int time)
+stepper(4,e,ttime);
+
+}
+
+void multithread(float dist1, float dist2, float e, int time)
 {
 
 int k=time;
@@ -437,12 +549,13 @@ ttime=time;
 //printf("Motor 1 will rotate for %f mm and motor 2 for %f mm in %f sec\n",dist1,dist2,(float)k/1000);
 
 boost::thread th1(&movex,dist1);
-
 boost::thread th2(&movey,dist2);
+boost::thread th3(&movee,e);
+
 
 th1.join();
 th2.join();
-
+th3.join();
 
 clearall();
 }
@@ -452,7 +565,7 @@ clearall();
 //{printf("Gcode: %d x=%f y=%f X=%f Y=%f I=%f J=%f\n",n,x,y,X,Y,i,j);}
 
 
-void g23(int n, float x, float y, float X, float Y,float i,float j)
+void g23(int n, float x, float y, float X, float Y,float i,float j,float e)
 {
 	//int n;
 	//float x=0, y=0; //current coordinates
@@ -667,7 +780,7 @@ float xold=x,yold=y;
 			}
 		}
 	}
-
+e=e/steps;
 	for (s = 0; s <= steps; s++)
 	{
 		//if(G2)
@@ -694,10 +807,10 @@ xold=stepper_x+xold;yold=stepper_y+yold;
 abs_stepperx=fabs(stepper_x);
 abs_steppery=fabs(stepper_y);
 if(abs_stepperx>abs_steppery)	{abs_stepperx=(abs_stepperx*250)-0.5;time=ceil(abs_stepperx);}
-else 		{abs_steppery=(abs_steppery*250)-0.5;time=ceil(abs_steppery);}
+else 				{abs_steppery=(abs_steppery*250)-0.5;time=ceil(abs_steppery);}
 
 
-multithread(stepper_x,stepper_y,time);
+multithread(stepper_x,stepper_y,e,time);
 
 //printf("dist_x==%f\tdist_y==%f\tin time==%d\n",stepper_x,stepper_y,time);
 	}
@@ -705,9 +818,115 @@ multithread(stepper_x,stepper_y,time);
 }		
 
 
+/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL*/
+void plot_line(float X,float Y, float x, float y, float e)
+{
+printf("#############################################################################\n##################################################################\n");
+printf("from X= %f to %f and Y= %f to %f\n",X,x,Y,y);
+
+float stepper_x_old=x,stepper_y_old=y,stepper_x1,stepper_y1;
+	float m;
+	float n = 0;
+	float c;
+	float i = 0;
+	float j = 0;
+int steps1=0;
+	float x1,y1;
+	int time;
+
+	float steps = 0;
+	int s = 0;
+	float stepper_x = x;
+	float stepper_y = y;
+
+	m = (Y - y) / (X - x);
+	i = X - x;
+	j = Y - y;
+	c = y - m*x;
+
+	if (j != 0)
+	{
+		steps = fabs(j);
+	}
+	else
+	{
+		steps = fabs(i);
+	}
+steps1=ceil(steps-0.5);
+e=e/(steps1+1);
+	for (s = 0; s < steps1; s++)
+	{
+		if (j != 0)
+		{
+			if (j > 0)
+			{
+				n = 1;
+			}
+			else
+			{
+				n = -1;
+			}
+			if (i != 0)
+			{
+				stepper_y = stepper_y + (n * 1);
+				stepper_x = (stepper_y - c) / m;
+			}
+			else
+			{
+				stepper_y = stepper_y + (n * 1);
+				stepper_x = x;
+			}
+		}
+		else if(j==0)
+		{
+			if (i > 0)
+			{
+				n = 1;
+			}
+			else
+			{
+				n = -1;
+			}
+			stepper_x = stepper_x + (n * 1);
+			stepper_y = y;
+		}
+
+
+//abs
+
+stepper_x1=stepper_x;stepper_y1=stepper_y;
+stepper_x1=stepper_x1-stepper_x_old;stepper_y1=stepper_y1-stepper_y_old;
+stepper_x_old=stepper_x1+stepper_x_old;stepper_y_old=stepper_y1+stepper_y_old;
+
+x1=abs(stepper_x1);
+y1=abs(stepper_y1);
+if(x1>y1)	{x1=(x1*250)-0.5;time=ceil(x1);}
+else 		{y1=(y1*250)-0.5;time=ceil(y1);}
 
 
 
+printf("xold=%f Yold=%f    x=%f y=%f\n",stepper_x_old,stepper_y_old,stepper_x1,stepper_y1);
+multithread(stepper_x1,stepper_y1,e,time);
+
+	}
+stepper_x=X;
+stepper_y=Y;
+
+stepper_x1=stepper_x;stepper_y1=stepper_y;
+stepper_x1=stepper_x1-stepper_x_old;stepper_y1=stepper_y1-stepper_y_old;
+stepper_x_old=stepper_x1+stepper_x_old;stepper_y_old=stepper_y1+stepper_y_old;
+
+x1=abs(stepper_x1);
+y1=abs(stepper_y1);
+if(x1>y1)	{x1=(x1*250)-0.5;time=ceil(x1);}
+else 		{y1=(y1*250)-0.5;time=ceil(y1);}
+
+multithread(stepper_x1,stepper_y1,e,time);	
+
+
+printf("##################enddd###########################################################\n##################################################################\n");
+
+}
 
 /*GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG*/
 
@@ -732,26 +951,44 @@ pinexport(stp3_1b); //stepper3 input1b
 pinexport(stp3_2a); //stepper3 input2a
 pinexport(stp3_2b); //stepper3 input1b
 
+pinexport(stp4_1a); //stepper3 input1a
+pinexport(stp4_1b); //stepper3 input1b
+pinexport(stp4_2a); //stepper3 input2a
+pinexport(stp4_2b); //stepper3 input1b
+
 
 string line;
 char linec[100];
 int lineno=0;
-string str1,str2,str3,strI,strJ,strtmp;
+
+string str1,str2,str3,strI,strJ,strtmp,strE;
+
 char x_coord[10],tmprry;
 char y_coord[10];
 char z_coord[10];
-
 char i_coord[10];
 char j_coord[10];
-float circle_i=0,circle_j=0;
-float x=0,y=0,x1=0,y1=0,z=0,z1=0;
+char e_coord[10];
+
+strcpy(x_coord,"X0");
+strcpy(y_coord,"Y0");
+strcpy(z_coord,"Z0");
+strcpy(i_coord,"I0");
+strcpy(j_coord,"J0");
+strcpy(e_coord,"E0");
+
+float circle_i=0,circle_j=0,extru=0;
+float x=0,y=0,x1=0,y1=0,z=0,z1=0,e=0,e1=0;
 int a=0,b=0;
 int gcode=999;
 char * pch;
 int time=0;
+
 float xold=0;
 float yold=0;
 float zold=0;
+float eold=0;
+
 int is_z=0;
 ifstream myfile ("/var/www/html/Upload/sample.gcode");
   if (myfile.is_open())
@@ -804,7 +1041,9 @@ gcode=3;
 	if(pch[0]=='Z'){strcpy(z_coord,pch);is_z=1;}	else{z=zold;is_z=0;}
 	if(pch[0]=='I'){strcpy(i_coord,pch);}
 	if(pch[0]=='J'){strcpy(j_coord,pch);}
-/*/////////////////////////////////////////////*/
+	if(pch[0]=='E'){strcpy(e_coord,pch);}
+
+
 
 
 pch = strtok (NULL, " ");
@@ -813,12 +1052,12 @@ pch = strtok (NULL, " ");
 str1=x_coord;str1=str1.substr(1);x=atof(str1.c_str());
 str2=y_coord;str2=str2.substr(1);y=atof(str2.c_str());
 str3=z_coord;str3=str3.substr(1);z=atof(str3.c_str());
-
 strI=i_coord;strI=strI.substr(1);circle_i=atof(strI.c_str());
 strJ=j_coord;strJ=strJ.substr(1);circle_j=atof(strJ.c_str());
+strE=e_coord;strE=strE.substr(1);extru=atof(strE.c_str());
 
-x=x-xold;y=y-yold;
-xold=x+xold;yold=y+yold;
+x=x-xold;y=y-yold;e=e-eold;
+xold=x+xold;yold=y+yold;eold=e+eold;
 if(is_z==1)
 {
 
@@ -826,7 +1065,7 @@ z=z-zold;
 zold=z+zold;
 
 }
-printf("Gcode: %d X=%f Y=%f Z=%f I=%f J=%f",gcode,x,y,z,circle_i,circle_j);
+printf("Gcode: %d X=%f Y=%f Z=%f I=%f J=%f E=%f",gcode,x,y,z,circle_i,circle_j,e);
 
 //
 if(is_z==1){printf("Z= %f\n",z);}
@@ -836,13 +1075,20 @@ else printf("\n");
 /*########################################################*/
 if(gcode==1||gcode==0)
 {
+
+if((x<10)&&(y<10))
+{
 x1=abs(x);
 y1=abs(y);
 if(x1>y1)	{x1=(x1*250)-0.5;a=ceil(x1);time=a;}
 else 		{y1=(y1*250)-0.5;b=ceil(y1);time=b;}
 
-multithread(x,y,time);
-
+multithread(x,y,e,time);
+}
+else
+{
+plot_line(x+xold,y+yold,xold,yold,e);
+}
 if(is_z==1)	{z1=abs(z);z1=z1*250-0.5;time=ceil(z1);stepper(3,z,time);printf("------------------------------------------------\n");is_z=0;}
 
 
@@ -854,7 +1100,7 @@ else if(gcode==2||gcode==3)
 printf("Gcode: %d x=%f y=%f X=%f Y=%f I=%f J=%f\n",gcode,x,y,xold,yold,circle_i,circle_j);
 
 
-g23(gcode,x+xold,y+yold,xold,yold,circle_i,circle_j);
+g23(gcode,x+xold,y+yold,xold,yold,circle_i,circle_j,e);
 
 //g23(2,0,10,10,0,0,-10);
 
