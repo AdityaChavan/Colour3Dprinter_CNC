@@ -1,0 +1,102 @@
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+chmod 7777 /sys/class/gpio/export
+
+echo 47 > /sys/class/gpio/export 
+echo 46 > /sys/class/gpio/export 
+echo 27 > /sys/class/gpio/export 
+echo 65 > /sys/class/gpio/export 
+echo 66 > /sys/class/gpio/export 
+echo 69 > /sys/class/gpio/export 
+echo 45 > /sys/class/gpio/export 
+echo 23 > /sys/class/gpio/export 
+echo 67 > /sys/class/gpio/export 
+echo 68 > /sys/class/gpio/export 
+echo 44 > /sys/class/gpio/export 
+echo 26 > /sys/class/gpio/export 
+echo 30 > /sys/class/gpio/export 
+echo 60 > /sys/class/gpio/export 
+echo 31 > /sys/class/gpio/export 
+echo 50 > /sys/class/gpio/export 
+
+echo out > /sys/class/gpio/gpio47/direction 
+echo out > /sys/class/gpio/gpio46/direction 
+echo out > /sys/class/gpio/gpio27/direction 
+echo out > /sys/class/gpio/gpio65/direction 
+echo out > /sys/class/gpio/gpio66/direction 
+echo out > /sys/class/gpio/gpio69/direction 
+echo out > /sys/class/gpio/gpio45/direction 
+echo out > /sys/class/gpio/gpio23/direction 
+echo out > /sys/class/gpio/gpio67/direction 
+echo out > /sys/class/gpio/gpio68/direction 
+echo out > /sys/class/gpio/gpio44/direction 
+echo out > /sys/class/gpio/gpio26/direction 
+echo out > /sys/class/gpio/gpio30/direction 
+echo out > /sys/class/gpio/gpio60/direction 
+echo out > /sys/class/gpio/gpio31/direction 
+echo out > /sys/class/gpio/gpio50/direction 
+
+echo 0 > /sys/class/gpio/gpio47/value  
+echo 0 > /sys/class/gpio/gpio46/value  
+echo 0 > /sys/class/gpio/gpio27/value  
+echo 0 > /sys/class/gpio/gpio65/value  
+echo 0 > /sys/class/gpio/gpio66/value  
+echo 0 > /sys/class/gpio/gpio69/value  
+echo 0 > /sys/class/gpio/gpio45/value  
+echo 0 > /sys/class/gpio/gpio23/value  
+echo 0 > /sys/class/gpio/gpio67/value  
+echo 0 > /sys/class/gpio/gpio68/value  
+echo 0 > /sys/class/gpio/gpio44/value  
+echo 0 > /sys/class/gpio/gpio26/value  
+echo 0 > /sys/class/gpio/gpio30/value  
+echo 0 > /sys/class/gpio/gpio60/value  
+echo 0 > /sys/class/gpio/gpio31/value  
+echo 0 > /sys/class/gpio/gpio50/value  
+
+chmod 7777 /sys/class/gpio/gpio47/value 
+chmod 7777 /sys/class/gpio/gpio46/value 
+chmod 7777 /sys/class/gpio/gpio27/value 
+chmod 7777 /sys/class/gpio/gpio65/value 
+chmod 7777 /sys/class/gpio/gpio66/value 
+chmod 7777 /sys/class/gpio/gpio69/value 
+chmod 7777 /sys/class/gpio/gpio45/value 
+chmod 7777 /sys/class/gpio/gpio23/value 
+chmod 7777 /sys/class/gpio/gpio67/value 
+chmod 7777 /sys/class/gpio/gpio68/value 
+chmod 7777 /sys/class/gpio/gpio44/value 
+chmod 7777 /sys/class/gpio/gpio26/value 
+chmod 7777 /sys/class/gpio/gpio30/value 
+chmod 7777 /sys/class/gpio/gpio60/value 
+chmod 7777 /sys/class/gpio/gpio31/value 
+chmod 7777 /sys/class/gpio/gpio50/value  
+
+chmod 7777 /sys/class/gpio/gpio47/direction
+chmod 7777 /sys/class/gpio/gpio46/direction
+chmod 7777 /sys/class/gpio/gpio27/direction
+chmod 7777 /sys/class/gpio/gpio65/direction
+chmod 7777 /sys/class/gpio/gpio66/direction
+chmod 7777 /sys/class/gpio/gpio69/direction
+chmod 7777 /sys/class/gpio/gpio45/direction
+chmod 7777 /sys/class/gpio/gpio23/direction
+chmod 7777 /sys/class/gpio/gpio67/direction
+chmod 7777 /sys/class/gpio/gpio68/direction
+chmod 7777 /sys/class/gpio/gpio44/direction
+chmod 7777 /sys/class/gpio/gpio26/direction
+chmod 7777 /sys/class/gpio/gpio30/direction
+chmod 7777 /sys/class/gpio/gpio60/direction
+chmod 7777 /sys/class/gpio/gpio31/direction
+chmod 7777 /sys/class/gpio/gpio50/direction
+
+
+exit 0
